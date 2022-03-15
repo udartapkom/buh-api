@@ -6,6 +6,7 @@ const AccountShema = new mongoose.Schema({
         minlength: 2,
         maxlength: 30,
         required: true,
+        default: 'Без счета'
       },
       summ: {
           type: Number,

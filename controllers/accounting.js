@@ -23,6 +23,49 @@ const createAccount = (req, res, next) => {
       throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
     });
 };
+// Получаем список счетов
+const getAccounts = (req, res, next) => {
+  const owner = req.user._id;
+  Account.find({ owner })
+    .orFail(() => {
+      throw new NotFoundErr(ERR_MSG.NOT_FOUND);
+    })
+    .then((data) => res.send(data))
+    .catch(next);
+};
+
+// обновление cчёта
+const updateAccount = (req, res, next) => {
+  const owner = req.user._id;
+  const { title, newTitle } = req.body;
+  if (!title || !newTitle) {
+    throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
+  }
+  Account.findOneAndUpdate({ title: title, owner: owner }, { title: newTitle }, { new: true })
+    .then((account) => {
+      res.send(account);
+    })
+    .catch(() => {
+      throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
+    });
+};
+
+//удаление счёта
+const deleteAccount = (req, res, next) => {
+  const owner = req.user._id;
+  const { title, newTitle } = req.body;
+  if (!title || !newTitle) {
+    throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
+  }
+  Account.findOneAndDelete({ title: title, owner: owner })
+    .then((account) => {
+      res.send(account);
+    })
+    .catch(() => {
+      throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
+    });
+};
+
 // Обновляем сумму на счёте пользователя
 const updateSumm = (req, res, next) => {
   const owner = req.user._id;
@@ -41,5 +84,8 @@ const updateSumm = (req, res, next) => {
 
 module.exports = {
     createAccount,
-    updateSumm
+    updateSumm,
+    getAccounts,
+    updateAccount,
+    deleteAccount
 }

@@ -42,7 +42,7 @@ const getData = (req, res, next) => {
     });
 };
 
-//Получаем всю информацию о расходах.
+//Получаем всю информацию о доходах.
 const getAllcategories = (req, res, next) => {
     const owner = req.user._id;
     InfoPlus.find({ owner })
