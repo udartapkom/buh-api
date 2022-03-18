@@ -16,6 +16,7 @@ const allowedCors = [
   'http://myportfolios.ru/',
   'https://www.myportfolios.ru/',
   'https://myportfolios.ru/',
+  '*'
 ];
 
 const app = express();
@@ -27,7 +28,7 @@ mongoose.connection.on('open', () => console.log('connected to mongoDB'));
 app.use(requestLogger);
 app.use(errortLogger);
 app.use(limiter);
-app.use(helmet());
+//app.use(helmet());
 app.use((req, res, next) => {
   const { origin } = req.headers;
   if (allowedCors.includes(origin)) {
