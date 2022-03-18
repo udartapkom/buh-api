@@ -53,8 +53,8 @@ const updateAccount = (req, res, next) => {
 //удаление счёта
 const deleteAccount = (req, res, next) => {
   const owner = req.user._id;
-  const { title, newTitle } = req.body;
-  if (!title || !newTitle) {
+  const { title } = req.body;
+  if (!title) {
     throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
   }
   Account.findOneAndDelete({ title: title, owner: owner })
