@@ -66,8 +66,20 @@ const createCategoryPlus = (req, res, next) => {
       });
   }
 
+      // Получаем список категорий доходов
+      const getAllPlusCategory = (req, res, next) => {
+        const owner = req.user._id;
+        CatPlus.find({ owner })
+          .orFail(() => {
+            throw new NotFoundErr(ERR_MSG.NOT_FOUND);
+          })
+          .then((data) => res.send(data))
+          .catch(next);
+    };
+    
   module.exports = {
       createCategoryPlus,
       updateCategory,
       deleteCategory,
+      getAllPlusCategory,
     }

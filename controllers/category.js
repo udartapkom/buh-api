@@ -64,10 +64,22 @@ const createCategoryMinus = (req, res, next) => {
       .catch(() => {
         throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
       });
-  }
+  };
+
+    // Получаем список категорий расходов
+    const getAllMinusCategory = (req, res, next) => {
+      const owner = req.user._id;
+      CatMinus.find({ owner })
+        .orFail(() => {
+          throw new NotFoundErr(ERR_MSG.NOT_FOUND);
+        })
+        .then((data) => res.send(data))
+        .catch(next);
+  };
 
   module.exports = {
       createCategoryMinus,
       updateCategory,
       deleteCategory,
+      getAllMinusCategory,
     }
