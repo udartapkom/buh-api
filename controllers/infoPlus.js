@@ -1,5 +1,4 @@
 const Account = require('../models/account');
-const CatPlus = require('../models/categoryPlus');
 const InfoPlus = require('../models/infoPlus')
 
 
@@ -28,56 +27,21 @@ const createInfoPlus = (req, res, next) => {
         description: description
       })
       .then((data) => { // если ответ положительный, ищем счёт по названию и создателю 
-        const newSumm = data.summ;
-        Account.findOne({ title: data.account, owner: owner })
+         const newSumm = data.summ;
+        Account.findOne({ title: titleAccount, owner: owner })
           .then((data) => { // если нашли
             const bigSumm = data.summ + newSumm;
-            Account.findByIdAndUpdate({ title: data.account, owner: owner }, { summ: bigSumm }, { new: true }) 
+            Account.findOneAndUpdate({ title: titleAccount, owner: owner }, { summ: bigSumm }, { new: true }) 
             .then((data) => {
               res.send(data)
             })
-          })
+          }) 
       })
       .catch(() => {
         throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
       })
 }
 
-
-
-
-const getData = (req, res, next) => {
-
-  const owner = req.user._id;
-  const { 
-      titleAccount, 
-      catPlus, 
-      date, 
-      summ, 
-      description } = req.body;
-  const infoPlusObj = {
-    owner: owner,
-    date: date,
-    summ: summ,
-    description: description,
-  };
-  const accountID = Account.findOne({ title: titleAccount, owner: owner });
-  const categoryID = CatPlus.findOne({ title: catPlus, owner: owner });
-   accountID.then((data) => {
-    console.log(data)
-    infoPlusObj.account = data.title;
-  });
-  categoryID
-    .then((data) => {
-      infoPlusObj.catPlus = data.title;
-      InfoPlus.create(infoPlusObj).then((data) => {
-        res.send(data);
-      });
-    })
-    .catch(() => {
-      throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
-    }); 
-};
 
 //Получаем всю информацию о доходах.
 const getAllcategories = (req, res, next) => {
