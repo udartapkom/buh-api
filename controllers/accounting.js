@@ -3,6 +3,7 @@ const { ERR_MSG } = require('../utils/constants');
 
 const {
   BadRequestErr,
+  NotFoundErr
 } = require('../errors/index');
 
 //Создаём счёт

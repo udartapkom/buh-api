@@ -10,6 +10,42 @@ const {
   BadRequestErr,
   NotFoundErr,
 } = require('../errors/index');
+
+
+const createInfoMinus = (req, res, next) => {
+  const owner = req.user._id;
+  const { 
+      titleAccount, 
+      catPlus, 
+      date, 
+      summ, 
+      description } = req.body;
+
+      InfoPlus.create({ // создаём инфо о доходе
+        account: titleAccount,
+        catPlus: catPlus,
+        owner: owner,
+        date: date,
+        summ: summ,
+        description: description
+      })
+      .then((data) => { // если ответ положительный, ищем счёт по названию и создателю 
+        const newSumm = data.summ;
+        Account.findOne({ title: data.account, owner: owner })
+          .then((data) => { // если нашли
+            const bigSumm = data.summ - newSumm;
+            Account.findByIdAndUpdate({ title: data.account, owner: owner }, { summ: bigSumm }, { new: true }) 
+            .then((data) => {
+              res.send(data)
+            })
+          })
+      })
+      .catch(() => {
+        throw new BadRequestErr(ERR_MSG.BAD_REQUEST);
+      })
+}
+
+
 // Функция пишет в модель infoMinus кучу айдишников, 
 //потом нужно по этим ID делать запросы с фронта, чтобы получить категории, счета и создателя...
 const getData = (req, res, next) => {
@@ -56,4 +92,5 @@ const getAllcategories = (req, res, next) => {
 module.exports = {
     getData,
     getAllcategories,
+    createInfoMinus
 }
