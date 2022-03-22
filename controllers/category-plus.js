@@ -4,6 +4,7 @@ const { ERR_MSG } = require('../utils/constants');
 const {
     BadRequestErr,
     ConflictErr,
+    NotFoundErr
   } = require('../errors/index');
 
   //Создаём категорию доходов

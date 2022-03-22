@@ -2,7 +2,8 @@ const getData = require('../controllers/general')
 
 
 const info = (req, res, next) => {
-getData(req)
+console.log(req.body)
+next()
 }
 
 module.exports = {info}

@@ -7,6 +7,7 @@ const {
 
 //Создаём счёт
 const createAccount = (req, res, next) => {
+  console.log(req)
   const { title } = req.body;
   const owner = req.user._id;
   if (!title) {
