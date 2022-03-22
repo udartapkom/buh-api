@@ -1,7 +1,6 @@
 const Account = require('../models/account');
 const InfoPlus = require('../models/infoPlus')
 
-
 const { ERR_MSG } = require('../utils/constants');
 
 const {
@@ -54,7 +53,6 @@ const getAllcategories = (req, res, next) => {
       .catch(next);
 }
 module.exports = {
-    getData,
     getAllcategories,
     createInfoPlus
 }
