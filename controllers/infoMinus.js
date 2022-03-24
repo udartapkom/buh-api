@@ -45,6 +45,28 @@ const createInfoMinus = (req, res, next) => {
       })
 }
 
+
+      //получаем информацию в диапазоне дат 
+      //формат запроса:
+//        {
+//        "dateStart": "2022.01.01",
+//        "dateOwer": "2022.10.24"
+//        }
+const getAnyData = (req, res, next) => {
+  const owner = req.user._id;
+  const {
+    dateStart,
+    dateOwer
+  } = req.body
+  InfoMinus.find({ date: { $gte: new Date(dateStart), $lt: new Date(dateOwer) }, owner: owner })
+  .then((data) => {
+    res.send(data)})
+  .catch(() => {
+    throw new BadRequestErr(ERR_MSG.BAD_REQUEST)
+  })
+}
+
+
 //Получаем всю информацию о расходах.
 const getAllcategories = (req, res, next) => {
     const owner = req.user._id;
@@ -57,5 +79,6 @@ const getAllcategories = (req, res, next) => {
 }
 module.exports = {
     getAllcategories,
-    createInfoMinus
+    createInfoMinus,
+    getAnyData
 }

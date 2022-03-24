@@ -15,7 +15,7 @@ router.use('/users', auth, usersRoute);
 router.use('/category', auth, categoryRoute);
 router.use('/categoryplus', auth, categoryPlusRoute);
 router.use('/minus', auth, infoMinus);
-router.use('/plus', auth, infoPlus);
+router.use('/plus', auth, infoPlus); 
 router.use('/', authRoute);
 router.use('*', auth, () => {
   throw new NotFoundErr('Данные не найдены');
