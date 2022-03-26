@@ -12,11 +12,10 @@ const { ERR_MSG } = require('./utils/constants');
 const { PORT = CFG.PORT, MONGO_URL = CFG.MONGO_URL } = process.env;
 
 const allowedCors = [
-  'http://www.myportfolios.ru/',
-  'http://myportfolios.ru/',
-  'https://www.myportfolios.ru/',
-  'https://myportfolios.ru/',
-  '*'
+  'http://www.coshelek2000.ru/',
+  'http://coshelek2000.ru/',
+  'https://www.coshelek2000.ru/',
+  'https://coshelek2000.ru/',
 ];
 
 const app = express();
