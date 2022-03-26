@@ -26,8 +26,6 @@ const InfoPlus = new mongoose.Schema({
       },
       description: {
           type: String,
-          minlength: 2,
-          maxlength: 300,
       }
 
 })
